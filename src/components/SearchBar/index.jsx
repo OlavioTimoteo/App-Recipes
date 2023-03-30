@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
-import { useAppContext } from '../../context/AppProvider';
+import React, { useEffect, useState } from "react";
+import { useLocation, useHistory } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
+import { useAppContext } from "../../context/AppProvider";
 
-import Container from './styles';
+import Container from "./styles";
 
-const notFound = 'Sinto muito, não encontramos nenhuma receita para esses filtros.';
+const notFound =
+  "Sinto muito, não encontramos nenhuma receita para esses filtros.";
 
 export default function SearchBar() {
   const location = useLocation();
@@ -18,11 +19,11 @@ export default function SearchBar() {
     setIsSearch,
     isSearch,
   } = useAppContext();
-  const [search, setSearch] = useState('');
-  const [searchParameters, setSearchParameters] = useState('');
+  const [search, setSearch] = useState("");
+  const [searchParameters, setSearchParameters] = useState("");
 
-  const isMeals = location.pathname === '/comidas';
-  const isDrinks = location.pathname === '/bebidas';
+  const isMeals = location.pathname === "/comidas";
+  const isDrinks = location.pathname === "/bebidas";
   const isMealsOrDrinks = isMeals || !isDrinks;
 
   function handleChange({ target: { value } }) {
@@ -31,13 +32,14 @@ export default function SearchBar() {
 
   async function sendRequisition(url) {
     const baseURL = isMealsOrDrinks
-      ? 'https://www.themealdb.com/api/json/v1/1/'
-      : 'https://www.thecocktaildb.com/api/json/v1/1/';
+      ? "https://www.themealdb.com/api/json/v1/1/"
+      : "https://www.thecocktaildb.com/api/json/v1/1/";
 
     try {
       const response = await fetch(`${baseURL}${url}`);
       const json = await response.json();
-      if (json.meals === null || json.drinks === null) return global.alert(notFound);
+      if (json.meals === null || json.drinks === null)
+        return global.alert(notFound);
       if (isMealsOrDrinks) setDataSearchMeals(json.meals);
       else setDataSearchDrinks(json.drinks);
     } catch (error) {
@@ -45,8 +47,8 @@ export default function SearchBar() {
       global.alert(notFound);
     }
     setIsSearch(!isSearch);
-    setSearch('');
-    setSearchParameters('');
+    setSearch("");
+    setSearchParameters("");
   }
 
   useEffect(() => {
@@ -56,33 +58,34 @@ export default function SearchBar() {
     if (dataSearchDrinks && dataSearchDrinks.length === 1) {
       history.push(`/bebidas/${dataSearchDrinks[0].idDrink}`);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSearchMeals, dataSearchDrinks]);
 
   function handleSubmitSearch(e) {
     e.preventDefault();
 
-    if (search === '' && searchParameters !== '') {
-      return global.alert('Preencha o campo de busca');
+    if (search === "" && searchParameters !== "") {
+      return global.alert("Preencha o campo de busca");
     }
 
-    if (search !== '') {
+    if (search !== "") {
       switch (searchParameters) {
-      case 'ingredient':
-        return sendRequisition(`filter.php?i=${search}`);
-      case 'name':
-        return sendRequisition(`search.php?s=${search}`);
-      case 'firstLetter':
-        if (search.length > 1) {
-          return global.alert('Sua busca deve conter somente 1 (um) caracter');
-        }
-        return sendRequisition(`search.php?f=${search}`);
-      default:
-        return null;
+        case "ingredient":
+          return sendRequisition(`filter.php?i=${search}`);
+        case "name":
+          return sendRequisition(`search.php?s=${search}`);
+        case "firstLetter":
+          if (search.length > 1) {
+            return global.alert(
+              "Sua busca deve conter somente 1 (um) caracter"
+            );
+          }
+          return sendRequisition(`search.php?f=${search}`);
+        default:
+          return null;
       }
     }
 
-    return global.alert('Selecione um dos filtros');
+    return global.alert("Selecione um dos filtros");
   }
 
   return (
@@ -90,16 +93,16 @@ export default function SearchBar() {
       <input
         type="text"
         placeholder="Faça sua busca..."
-        value={ search }
-        onChange={ (e) => setSearch(e.target.value) }
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         data-testid="search-input"
       />
       <button
         type="submit"
         data-testid="exec-search-btn"
-        onClick={ (e) => handleSubmitSearch(e) }
+        onClick={(e) => handleSubmitSearch(e)}
       >
-        <FaSearch color="#015543" size={ 25 } />
+        <FaSearch color="#015543" size={25} />
       </button>
       <div className="container-radios">
         <label htmlFor="ingredient">
@@ -108,8 +111,8 @@ export default function SearchBar() {
             name="search"
             id="ingredient"
             value="ingredient"
-            checked={ searchParameters === 'ingredient' }
-            onChange={ (e) => handleChange(e) }
+            checked={searchParameters === "ingredient"}
+            onChange={(e) => handleChange(e)}
             data-testid="ingredient-search-radio"
           />
           Ingrediente
@@ -120,8 +123,8 @@ export default function SearchBar() {
             name="search"
             id="name"
             value="name"
-            checked={ searchParameters === 'name' }
-            onChange={ (e) => handleChange(e) }
+            checked={searchParameters === "name"}
+            onChange={(e) => handleChange(e)}
             data-testid="name-search-radio"
           />
           Nome
@@ -132,8 +135,8 @@ export default function SearchBar() {
             name="search"
             id="firstLetter"
             value="firstLetter"
-            checked={ searchParameters === 'firstLetter' }
-            onChange={ (e) => handleChange(e) }
+            checked={searchParameters === "firstLetter"}
+            onChange={(e) => handleChange(e)}
             data-testid="first-letter-search-radio"
           />
           Primeira letra

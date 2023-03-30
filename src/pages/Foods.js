@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { Row } from 'react-bootstrap';
-import { useAppContext } from '../context/AppProvider';
-import RecipeCards from '../components/RecipeCards';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Loading from '../components/Loading';
-import CategoryButtonsMeals from '../components/CategoryButtonsMeals';
+import React, { useEffect } from "react";
+import { Row } from "react-bootstrap";
+import { useAppContext } from "../context/AppProvider";
+import RecipeCards from "../components/RecipeCards";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Loading from "../components/Loading";
+import CategoryButtonsMeals from "../components/CategoryButtonsMeals";
 
 export default function Foods() {
   const {
@@ -20,25 +20,24 @@ export default function Foods() {
   } = useAppContext();
 
   useEffect(() => {
-    fetchCategoriesAndRecipes('meals');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchCategoriesAndRecipes("meals");
   }, [selectedCategoryMeals]);
 
   const createCategoryButtons = () => {
     if (mealCategories.length > 0) {
-      return (<CategoryButtonsMeals buttonsData={ mealCategories } />);
+      return <CategoryButtonsMeals buttonsData={mealCategories} />;
     }
   };
 
   const createRecipeCards = () => {
     if (meals.length > 0 || ingredientsPage) {
       return (
-        <Row xs={ 2 } md={ 2 } className="g-2" as="section">
+        <Row xs={2} md={2} className="g-2" as="section">
           <RecipeCards
-            cardsData={ meals }
+            cardsData={meals}
             type="Meal"
             dataID="recipe-card"
-            MAX_ELEMENTS={ 12 }
+            MAX_ELEMENTS={12}
           />
         </Row>
       );
@@ -48,12 +47,12 @@ export default function Foods() {
   const createSearchRecipeCards = () => {
     if (dataSearchMeals.length > 0) {
       return (
-        <Row xs={ 2 } md={ 2 } className="g-2" as="section">
+        <Row xs={2} md={2} className="g-2" as="section">
           <RecipeCards
-            cardsData={ dataSearchMeals }
+            cardsData={dataSearchMeals}
             type="Meal"
             dataID="recipe-card"
-            MAX_ELEMENTS={ 12 }
+            MAX_ELEMENTS={12}
           />
         </Row>
       );
@@ -63,8 +62,8 @@ export default function Foods() {
   const standardReturnElements = (
     <>
       <Header pagename="Comidas" completeSearch />
-      { createCategoryButtons() }
-      { isSearch ? createSearchRecipeCards() : createRecipeCards() }
+      {createCategoryButtons()}
+      {isSearch ? createSearchRecipeCards() : createRecipeCards()}
       <Footer />
     </>
   );
