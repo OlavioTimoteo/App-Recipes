@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Container = styled.form`
   align-items: center;
@@ -10,12 +10,19 @@ const Container = styled.form`
     position: relative;
     width: 70%;
     transform: rotate(160deg);
-    
+
     & + img {
       transform: rotate(340deg);
       position: absolute;
       top: 100px;
       width: 20%;
+    }
+
+    @media (min-width: 768px) {
+      width: 30%;
+      & + img {
+        width: 10%;
+      }
     }
   }
 
@@ -55,7 +62,7 @@ const Container = styled.form`
     }
   }
 
-  button[type='submit'] {
+  button[type="submit"] {
     width: 90%;
     height: 2.5rem;
     padding: 0 1.5rem;
@@ -66,7 +73,7 @@ const Container = styled.form`
 
     font-size: 1rem;
     font-weight: 600;
-    
+
     color: var(--white-0);
     margin-top: 1.5rem;
 
@@ -100,7 +107,7 @@ const Container = styled.form`
       background: var(--yellow-800);
 
       transition: filter 0.2s;
-      
+
       &:hover {
         filter: opacity(0.7);
       }
